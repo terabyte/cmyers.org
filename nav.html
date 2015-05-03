@@ -19,24 +19,31 @@
 				<!--#endif -->
 					<a href="/">Home</a></li>
 
+				<!--#if expr = "$page = blog" -->
+					<li class="active">
+				<!--#else -->
+					<li>
+				<!--#endif -->
+					<a href="/blog/blog.html">Blog</a></li>
+
 				<!--#if expr = "$page = about" -->
 					<li class="active">
 				<!--#else -->
 					<li>
 				<!--#endif -->
-				<a href="about.html">About</a></li>
+				<a href="/about.html">About</a></li>
 
 				<!--#if expr = "$page = contact" -->
 					<li class="active">
 				<!--#else -->
 					<li>
 				<!--#endif -->
-				<a href="contact.html">Contact</a></li>
+				<a href="/contact.html">Contact</a></li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Resume<span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="resume/resume.pdf">PDF</a></li>
-						<li><a href="resume/resume.tex">LaTeX</a></li>
+						<li><a href="/resume/resume.pdf">PDF</a></li>
+						<li><a href="/resume/resume.tex">LaTeX</a></li>
 						<!--
 	      <li class="divider"></li>
 	      <li class="dropdown-header">Nav header</li>

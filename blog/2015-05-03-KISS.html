@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!--#set var = "posttitle" value = "KISS" -->
+<!--#set var = "postdate" value = "May 3rd, 2015" -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/favicon.ico">
+
+	<title>Carl Myers' Blog - <!--#echo var = posttitle --></title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/bootstrap/css/theme.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines!
+    <script src="../../assets/js/ie8-responsive-file-warning.js"></script>
+    <script src="bootstrap/js/ie-emulation-modes-warning.js"></script>
+    -->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body role="document">
+
+	<!-- include the nav bar -->
+	<!--#set var = "page" value = "blog" -->
+	<!--#include file="/nav.html" -->
+
+    <div class="container theme-showcase" role="main">
+
+      <div>
+		  <h1><!--#echo var = "posttitle" --></h1>
+		  <h2><!--#echo var = "postdate" --></h2>
+		  <p>
+		  One of the most often-broken engineering principles is "KISS" - "Keep
+		  It Simple, Stupid".  Engineers love to use cool technologies to build
+		  cool solutions that are complex, elegant, and "future-proof".  The
+		  problem is, of course, the actual situation frequently just doesn't call for anything that fancy.
+		  </p>
+		  <p>
+		  That is why I am writing this blog as simple, static HTML.  Dynamic
+		  blog solutions, like <a href="http://wordpress.com">wordpress</a>,
+		  suffer from exploits and security holes.  Managing them is a pain.
+		  Other solutions like <a href="https://github.com/jgm/gitit">gitit</a>
+		  (a git-backed wiki I use for various things) don't look very nice
+		  (and as a person who tells computers what to do for a living, I had
+		  better at least have a passable web site that doesn't look like it
+		  transparently proxies the wayback machine).  Twitter bootstrap made
+		  making a nice looking website easy, but because everything is static,
+		  I can't easily display my blog entries.
+		  </p>
+		  <p>
+		  Some day, I may reinvestigate this decision, but for now, let's keep
+		  it simple.  When I go to write a new blog entry, I simply copy my
+		  template file, and start writing.  When I am ready to publish the
+		  entry, I simply add it to the table of blog entries on the main blog
+		  page.  Since my entire website itself is hosted on github and
+		  automatically deployed via crontab, all I have to do is push my
+		  changes to a git repo and the rest happens automagically (just like
+		  if I used gitit).  For now, this is the right balance of "simple" and
+		  "features".
+		  </p>
+      </div>
+
+
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/bootstrap/js/docs.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
