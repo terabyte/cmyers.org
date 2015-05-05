@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<!--#set var = "posttitle" value = "Telling Computers What To Do" -->
+<!--#set var = "postdate" value = "May 4th, 2015" -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/favicon.ico">
+
+	<title>Carl Myers' Blog - <!--#echo var = posttitle --></title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/bootstrap/css/theme.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines!
+    <script src="../../assets/js/ie8-responsive-file-warning.js"></script>
+    <script src="bootstrap/js/ie-emulation-modes-warning.js"></script>
+    -->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body role="document">
+
+	<!-- include the nav bar -->
+	<!--#set var = "page" value = "blog" -->
+	<!--#include file="/nav.html" -->
+
+    <div class="container theme-showcase" role="main">
+
+      <div>
+<h1><!--#echo var = "posttitle" --></h1>
+<h2><!--#echo var = "postdate" --></h2>
+<p>
+One of my favorite taglines or sayings is "I tell computers what to do for a
+living", and "Computers do what you tell them".  Most non-technical folks find
+these sayings funny or quaint, but they mean something very specific and
+important.  When a user says "the computer deleted my file!" there are only two
+thinsgs they can mean: "I told my computer to delete my file" or "someone else
+told my computer to delete my file".  Saying "Computers do what you tell them"
+is reminding even the most technical people that computers are (with very few
+exceptions) deterministic, predictable, and reliable.  Which means when they
+don't do what you expect, it's probably your own fault.
+</p><p>
+Of course, the point isn't to provide apologetics for why today, after 60+
+years of the field of computer science existing, it is still so very hard to
+get computers to do what you want.  In fact, in many ways it is harder than
+ever before.  This is about a deep truth about how computers work.  When a
+junior engineer says "It won't do X" or "I can't make it do X" what they mean
+is "something is going on that I don't understand" - but you CAN understand it
+if you can figure out what questions to ask, and how to ask them.  You don't
+have to ask your boss or your mentor or your technical support line - you can
+ask your computer.  Presumably, it knows.
+</p><p>
+Much like "wrong answers" on an essay question in English class, there are
+uncountably many ways a computer might break your expectations and fail to do
+what you think it should.  But almost all of these, in retrospect, seem
+obvious.  Once you know that "one little thing", correcting the problem is
+easy.  But how do you find out the "one little thing"?  That is what separates
+the good engineers from the great ones, and what contributes to those few who
+are 10x or 100x engineers.
+</p><p>
+In the olden times, everything about a computer was laid bare, and your typical
+computer operator could describe the state of every register and exactly what
+the computer was doing.  You couldn't do much without this deep level of
+understanding.  Today, things are not like that.  I don't know how a BIOS
+works.  I'm not sure what happens when I press the power button on my laptop
+and the electronics whir to life to complete their sisyphean task of delivering
+me pictures of cats falling into water and looking pretty unhappy about it, but
+I am grateful that it works.  Somehow, all the registers go from random states
+of not having enough electrons, to an appropriate, deterministic state where the
+completely non-physical emergent phenomenon we call an "operating system" can
+emerge from the chaos.  I also don't know how my operating system works, but
+since I use Linux, which is open-source, at least I can *look* at the code and
+try to figure it out.  "One of these days..." I always say.
+</p><p>
+Oh, but there is more!  Because the operating system runs a host of tools in
+"userspace", which are not really part of it but without which a computer can't
+really do any of those critical cat-related things we talked about earlier.
+Again, for me at least, I can view all of the source of how they accomplish
+that - but I don't.   I also don't know how my networking stack works.  I'm not
+sure how my hard disk writes magnetic 1s and 0s to the platter, complete with
+error correction.  I'm not quite sure how my video card tells my monitor which
+of the 1960x1280 pixels to turn on and what colors to show for each one, 60
+times per second - but it does.  Somehow.  This is why people personify
+computers.  This is why people think "they" do "things" to "us".  You can no
+more understand everything about your computer than you can know the state of
+every neuron in your own brain (how would that work?  Think about it).  
+</p><p>
+So, back to the 10x engineer.  How do they always seem to know?  How do they
+run circles around the rest of us, and just <b>get so much done</b>?  They ask
+the right questions, and they ask it of the right entity - their computer.
+They (often) don't settle on shoving random print statements into code - they
+lay the entire thing bare with a debugger.  They read <b>and understand</b>
+every line of code between the moment they press "enter", and the moment the
+computer "does something wrong".  And I think they do this because they
+understand that "computers do what you tell them".  Whatever is wrong, it has
+to be in there somewhere.  I mean, short of a bad motherboard or some spotty
+ram.  And good engineers think about that too.  I knew one who, after losing an
+<b>entire week</b> debugging non-deterministic behavior, only to find the ram
+in his new machine was faulty, swore that he would run memtest86 on every new
+machine he bought or got from work annually, for all time.  For the price of a
+few hours of burnin when he wouldn't have been using it anyways, he can save
+himself countless hours of wondering if he is, in fact, taking crazy pills (a
+detrimental state to find oneself in for certain).
+</p><p>
+So what is my advice to those who would tell computers what to do for a living?
+The next time the computer doesn't seem to be listening, maybe you should be
+the one who is listening, and asking the right questions.  Have you read the
+logs?  What versions of the software are you using?  What has changed since it
+worked last?  Can you examine the source code?  Can you examine the state of
+the memory?  Does it fail deterministically?  If not, can you detect a pattern
+in the failure?  Maybe you need to invest some serious time to answer some of
+these questions.  Maybe you need to write a debugger or disassembler.  Maybe
+you even need to go learn assembly, or Java bytecode.  Your boss should be
+happy to "pay" you for your time in these endeavours, because the time you
+spend today writing these tools or learning how these tools work, instead of
+"jiggling it until it works", is paid back to your and your employer tenfold,
+or even a hundred fold, and those are dividends worth having.
+</p>
+      </div>
+
+
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/bootstrap/js/docs.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
