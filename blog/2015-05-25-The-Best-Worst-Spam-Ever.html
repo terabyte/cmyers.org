@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<!--#set var = "posttitle" value = "The Best Worst Spam Ever" -->
+<!--#set var = "postdate" value = "May 25th, 2015" -->
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -9,7 +11,7 @@
     <meta name="author" content="">
     <link rel="icon" href="/favicon.ico">
 
-    <title>Carl Myers - Software Engineer</title>
+	<title>Carl Myers' Blog - <!--#echo var = posttitle --></title>
 
     <!-- Bootstrap core CSS -->
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -39,15 +41,19 @@
 
     <div class="container theme-showcase" role="main">
 
-      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div>
 
-	  <h1>Blog Posts</h1>
+<h1><!--#echo var = "posttitle" --></h1>
+<h2><!--#echo var = "postdate" --></h2>
+<p>
+Today I received a phishing mail.  That isn't very special.  But just how
+hilarious this message is, is special indeed.  I have included the email below,
+in the exact form I observed it first in my mail client, headers and all.
+</p>
+<img src="badphishingcropped.png"/>
+</p>
 
-	  <table class="table">
-	      <tr><td>Date</td><td>Title</td></tr>
-		  <tr><td>2015-05-03</td><td><a href="2015-05-03-KISS.html">KISS</a></td></tr>
-		  <tr><td>2015-05-25</td><td><a href="2015-05-25-The-Best-Worst-Spam-Ever.html">The Best Worst Spam Ever</a></td></tr>
-	  </table>
+      </div>
 
 
     </div> <!-- /container -->
