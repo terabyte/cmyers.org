@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<!--#set var = "posttitle" value = "New System76 Oryx Laptop Setup" -->
+<!--#set var = "postdate" value = "December 1st, 2015" -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/favicon.ico">
+
+	<title>Carl Myers' Blog - <!--#echo var = posttitle --></title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/bootstrap/css/theme.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines!
+    <script src="../../assets/js/ie8-responsive-file-warning.js"></script>
+    <script src="bootstrap/js/ie-emulation-modes-warning.js"></script>
+    -->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body role="document">
+
+	<!-- include the nav bar -->
+	<!--#set var = "page" value = "blog" -->
+	<!--#include file="/nav.html" -->
+
+    <div class="container theme-showcase" role="main">
+
+      <div>
+
+<h1><!--#echo var = "posttitle" --></h1>
+<h2><!--#echo var = "postdate" --></h2>
+<p>
+So it's time once again to play the laptop setup game.  This time, I'm going to
+document it to make it easier next time.  My new laptop is the System76 Oryx
+Pro.  This bad boy has the new Intel Skylark (14nm process) CPU, 64GB of ram,
+and a 512GB M.2 PCIe SSD, plus a *beautiful* 17in screen and the ability to
+drive 3 external monitors (<b>in addition to</b> the built-in panel).  It came
+preinstalled with Ubuntu 15.10.
+</p><p>
+So the first task is to test everything.  If something doesn't work, I need to
+know it before I go mucking around and customizing things.  Then, and only
+then, can I burn the evil ubuntu install to the ground and install my distro of
+choice, Debian, including full disk encryption (look at the year, it's 2015,
+gotta encrypt that shit).
+</p><p>
+From my testing, I observed the following:
+<ul>
+    <li>All function keys (disable trackpad, turn LCD on/off, brightness, keyboard backlight, sound volume, etc) worked perfectly out of the box.  This seems like it should be a given but you'd be suprised how often that is not true for linux laptops.</li>
+    <li>The machine should sleep and wake up correctly - we are truly living in the glorious Linux future when this works.  I had some difficulty with the resume process hanging or being very very slow, but I did an <pre>apt-get update && apt-get dist-upgrade</pre> and rebooted with a shiney new kernel and everything started working flawlessly.</li>
+    <li>The sound should work.  Linux sound is pretty firmly in the "just works" camp these days, but you should absolutely make sure.</li>
+    <li>Confirm what video driver you have with <pre>lsmod</pre>.  I unsuprisingly had <pre>nvidia</pre>, the proprietary non-free driver for my laptop's nvidia card.  This used to be a tragedy, but I went on to test and everything worked out to the best of my ability to observe.  Specifically, I was able to attach external monitors, which were immediately detected on the fly.  I was able to drag windows between monitors.  I was able to run arandr to configure my monitor resolution and relative layouts.  This all "just worked".  I am 95% idealist and 5% pragmatist, but the 5% might win out this time if the proprietary driver continues to "just work" after reinstalling my new OS.</li>
+    <li>Wifi "just worked", no problem.</li>
+    <li>The correct number of CPU Cores and amount of RAM registers (via htop or something similar), and ensure the hard drive size and model looks correct.</li>
+</ul>
+</p><p>
+With things seemingly working correctly, it was time to burn a new Debian Testing netinst CD, pop it into my usb cdrom drive, and reboot the machine.  I downloaded the netinst ISO from <a href="https://www.debian.org/CD/netinst/">https://www.debian.org/CD/netinst/</a> and burned it using wodim as follows.
+<pre>wodim -v dev=/dev/sr0 -eject ~/debian-testing-amd64-netinst.iso</pre> (this was on my old laptop, the Oryx Pro doesn't have a CD drive - I bought an external USB one just to make this easier though).  I went into the bios, changed the boot order, popped in the cdrom I just burned and restarted the machine.  Debian installer activate!
+</p><p>
+The first problem didn't take long to hit - the wifi requires a proprietary firmware blob (!!!).  I went off to research what to do about that.  It turns out you just use a USB drive, download the blobs, toss the USB drive in when prompted, plug the drive in to your laptop and select "yes" to find them.  Then, hold out hope for a future where you don't have to flush your ideals down the crapper to have the sweetest notebook on the market.  Simply plugging the USB drive in didnt' work, I had to pop over to a virtual console (ctrl+alt+F2) and run "mount -a" to mount it.  Then I flipped back, asked it to search again, and it found the files.
+</p><p>
+I select "use entire volume for encrypted LVM" and let it zero out the disk.  After that, it shows the partition layout.  Since I have 64GB of ram, the default of 15GB of swap seems fine to me, but the default of 10GB of root seems small.  I checked my old laptop which I've been using for a few years and it's at 8GB used.  I had chosen 20GB for it before.  Since this includes the /tmp directory, I go for 20GB over 15GB again.  After doing some research, I determined btrfs sppears ready for "normal use", so I chose that over ext4.  Even the ext4 devs say btrfs is "the way forward", so the question to ask is "am I comfortable with how stable it is/isn't?".
+</p><p>
+Next the system begins installing.  When prompted, uncheck "debian desktop environment".  I throw your Gnome on the ground!  I ain't a part of your system.  Include print server, ssh server, and standard system utilities, because we aren't barbarians here.  If I want it, I'll install nginx later, I don't want to find out what they think "web server" means.
+</p><p>
+So next, it says "Install the GRUB boot loader" failed.  Great.  Seems to be because this new machine is using UFEI to boot.  See http://tanguy.ortolo.eu/blog/article51/debian-efi for details.
+TODO LIST
+<ul>
+    <li>Fix capslock key to be control in terminal and X</li>
+    <li><pre>apt-get install vim sudo less zsh dc mosh git network-manager alsa-utils lsof strace vnc4server xvnc4viewer vpnc screen ratpoison fluxbox htop iotop build-essential xscreensaver xscreensaver-gl xserver-xorg</li>
+    <li>install externally java, google-chrome, tmux/gitscripts, investigate "oh my zsh" and vim stuff</li>
+    <li>retest everything above</li>
+    <li>Copy over all user data</li>
+    <li>install ...</li>
+    <li>Ensure all power saving scripts work</li>
+    <li>
+
+
+
+
+
+
+Company culture is a tricky thing.  Everyone has an opinion about it, and
+companies spend millions, sometimes billions of dollars trying to reinforce
+their culture because they believe it can be the difference between success and
+failure.  Few places are culture as important as in software engineering.  The
+sort of collaboration involved in individuals working on teams, and teams
+working together, to produce massive scale software is impacted greatly by
+culture.  I've been thinking about how this relates to internal tools for a
+long time and I've come to believe that tools are one of those most important
+and most often-overlooked contributor to developer culture at a software
+company.
+</p><p>
+When I think about tools and build culture, I divide companies into two groups,
+"the Google way" and "the Amazon way".  I'm not saying either way is better
+than the other (though I prefer the Amazon way), they are just different.
+Also, of course, these are not binary but rather fall on a spectrum.  What I
+mean by "the Google way" is "everyone has to use the same tools" and "everyone
+builds everything from tip all the time".  Team A makes a new version, and the
+next time team B builds something that depends upon that project they get Team
+A's new changes - whether they want to or not.  Whether it works or not.  They
+immediately know if there is a problem - and if things break, they fix it.
+Because someone said so.  Because you have to.  Because process.
+</p><p>
+On the other hand, you have "the Amazon way".  There is a huge shared dev
+ecosystem, but they can't *really* force teams to use it.  More importantly,
+that dev ecosystem supports building on fixed versions.  This means that if
+Team A makes a change, and Team B depends upon Team A's software project, and
+that change would break Team A, the build system tells them so, and prevents
+them from breaking.  Maybe the impetus falls on Team B to "eventually upgrade
+to the newest code and fix the break", or maybe Team A is responsible for
+driving the deprecation of old versions of their software within the company.
+But neither team is <b>blocked</b>.  Never.  Being blocked is unacceptable and
+the build system goes to extreme lengths to ensure that nobody is ever blocked
+- not really - they always have the information to know what their change
+breaks, and the power to fix it or work around it.  Whether that's a good idea
+or not.  Because tools give you power.  And with great power, comes great
+complexity.  I mean, responsibility too, but mostly complexity.  <a
+href="http://en.wikipedia.org/wiki/Uncle_Ben#.22With_great_power_comes_great_responsibility.22">Uncle
+Ben got it half right</a>.
+</p><p>
+I've witnessed people argue fervently for both sides of the coin, usually using
+the best argument for any such system: "It's the worst way to do it except
+every other way".  But what I actually think should determine which way a
+company goes is the company structure and culture itself.  Does your company
+value independence, ownership, and pushing decision making as low in the
+(possibly barely existent) hierarchy as possible?  Then you want "the Amazon
+way".  Does your company value high-level decision making by the folks that
+have the most data?  Are team interactions metered via a comprehensive
+hierarchy?  Are tools simple and bureaucracy thick?  Then you probably want
+"the Google way".
+</p><p>
+Again, while I am obviously biased, I've never worked for Google (or any
+company that does it "the Google way"), so take that part with a grain of salt
+for sure.  Another reason why I personally prefer "the Amazon way", however, is
+that it is also the open source way.  There *is* no hierarchy in Open Source -
+projects do own their own software, and depend upon each other, and have to
+work together somehow.  That necessitates not always building everything using
+the same version of every library.  But it also creates the very complex
+problem of diamond dependencies, compatibility, and consistency, which are
+still unsolved outside the walls of enterprise (and very few apart from Amazon
+have solved it inside those walls, either).
+</p><p>
+So what does open source do?  Is anything close?  It looks to me like the Go
+development ecosystem is very close to "the Google way" (unsurprisingly, since
+Go was basically birthed whole cloth from the Google womb).  When you build Go
+software it finds (via heuristics) all of the libraries' source itself and
+builds their newest versions.  Some have tried to invent "the Amazon way" in Go
+using a dependency manager called <a
+href="https://github.com/tools/godep">godep</a>, but like most solutions it
+solves the problem for a specific project, but not the larger ecosystem.  Two
+projects using two different sets of dependencies via godep might never be able
+to depend upon each other successfully.  Still, the way godep works is
+brilliant and probably the best I've seen in open source (for now!  More to
+come on this front!)
+</p><p>
+At the end of the day, all companies have the same goals.  They want to create
+value and solve problems.  They do this by attracting the best talent and
+keeping them happy.  That means a fun, productive working environment.  Both
+sides of the spectrum can contribute to that, but in different ways.  In some
+ways, a better name for this conversation might be "A Tale of Two Cultures",
+because the arguments for one choice over the other aren't as much about
+technical aspects as they are social and cultural ones.  You have to think "How
+do I want to organize my teams?" and "How do I want to be organized?".
+</p>
+
+      </div>
+
+
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/bootstrap/js/docs.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
